@@ -1,25 +1,46 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {clickCount: 0};
+  // }
+
+  state = {
+    clickCount: 0,
+    liked: false
+  }
+
+  clickHandler = () => {
+    console.log('clicked');
+    // you should not mutate state directly
+    // this.state.clickCount = this.clickCount + 1;
+    // this.setState({
+    //   clickCount: this.state.clickCount + 1
+    // })
+    this.setState((state, props) => ({
+      counter: state.clickCount + 1
+    }));
+  }
+
+  likeHandler = () => {
+    this.setState((state, props) => ({
+      liked: !state.liked
+    }))
+  }
+
+  render() {
+    return (
+      <>
+        <h1>Counter: {this.state.clickCount}</h1>
+        <button onClick={this.clickHandler}>Click Me</button>
+        <h1>{this.state.liked ? 'I like it' : 'I don\'t like it'}</h1>
+        <button onClick={this.likeHandler}>{this.state.liked ? 'Unlike' : 'Like'}</button>
+      </>
+    )
+  }
 }
 
 export default App;
